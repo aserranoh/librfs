@@ -1,0 +1,44 @@
+
+Pca9685
+=======
+
+The `Pca9685` module defines classes and functions to interface with the
+`PCA9685 <https://www.nxp.com/products/power-management/lighting-driver-and-controller-ics/led-controllers/16-channel-12-bit-pwm-fm-plus-ic-bus-led-controller:PCA9685>`_
+device. The **PCA9685** is an IC that manages up to **16 PWM** channels with a **12-bit** resolution and
+it is controlled using the I\ :sup:`2`\ C protocol.
+
+Pca9685 class
+-------------
+
+.. doxygenclass:: rfs::Pca9685
+   :members:
+
+Pca9685Pwm class
+----------------
+
+.. doxygenclass:: rfs::Pca9685Pwm
+   :members:
+
+Pca9685OnOffTimes struct
+------------------------
+
+.. doxygenstruct:: rfs::Pca9685OnOffTimes
+   :members:
+
+Pca9685ClockMode enum
+---------------------
+
+.. doxygenenum:: rfs::Pca9685ClockMode
+   :project: RobotsFromScratch
+
+Pca9685OutputChange enum
+------------------------
+
+.. doxygenenum:: rfs::Pca9685OutputChange
+   :project: RobotsFromScratch
+
+Pca9685OutputDisabledMode enum
+------------------------------
+
+.. doxygenenum:: rfs::Pca9685OutputDisabledMode
+   :project: RobotsFromScratch
