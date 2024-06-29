@@ -18,14 +18,14 @@ public:
     Error(int error_code): error_code(error_code) {}
     Error(int error_code, const string &detail): error_code(error_code), detail_msg(detail) {}
 
-    string detail() {
+    string detail() const {
         if (!detail_msg.empty())
             return string{strerror(error_code)} + ": " + detail_msg;
         else
             return string{strerror(error_code)};
     }
 
-    string name() {
+    string name() const {
         return {strerrorname_np(error_code)};
     }
 
