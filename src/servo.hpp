@@ -1,4 +1,6 @@
 
+#pragma once
+
 #include <expected>
 #include <memory>
 

@@ -173,8 +173,6 @@ public:
     Pca9685(): fd(-1), this_shared(this, [](auto){}) {}
 
     ~Pca9685() {
-        set_always_off(ALL_CHANNELS, true);
-
         if (fd >= 0)
             close();
     }
