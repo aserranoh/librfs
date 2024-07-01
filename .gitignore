@@ -1,3 +1,4 @@
 .Trash*
 .vscode
 build
+build-x86_64

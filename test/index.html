@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        h1 {
+            text-align: center;
+        }
+        .slider {
+            width: 100%;
+        }
+        .textValue {
+            text-align: center;
+        }
+    </style>
+    <title>Camera gimbal</title>
+</head>
+<body>
+
+<h1>Camera gimbal</h1>
+<div class="slidecontainer">
+    <p>Horizontal</p>
+    <p id="horizontalText" class="textValue">50</p>
+    <input id="horizontalSlider" type="range" min="1" max="100" value="50" class="slider" onchange="onHorizontalSliderChanged(this.value)" oninput="onHorizontalSliderChanged(this.value)">
+    <hr>
+    <p>Vertical</p>
+    <p id="verticalText" class="textValue">50</p>
+    <input id="verticalSlider" type="range" min="1" max="100" value="50" class="slider" onchange="onVerticalSliderChanged(this.value)" oninput="onVerticalSliderChanged(this.value)">
+</div>
+
+<script>
+
+const horizontalSlider = document.getElementById("horizontalSlider");
+const horizontalText = document.getElementById("horizontalText");
+const verticalSlider = document.getElementById("verticalSlider");
+const verticalText = document.getElementById("verticalText");
+
+function onHorizontalSliderChanged(newVal) {
+    horizontalText.innerHTML = newVal;
+    postValues();
+}
+
+function onVerticalSliderChanged(newVal) {
+    verticalText.innerHTML = newVal;
+    postValues();
+}
+
+function postValues() {
+    const data = {
+        horizontal: Number(horizontalSlider.value),
+        vertical: Number(verticalSlider.value),
+    };
+    fetch("/angles/", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data),
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error("response was not ok");
+        }
+    })
+    .catch(error => {
+        console.error("there was a problem with the POST request:", error);
+    });
+}
+    
+</script>
+
+</body>
+</html> 
+
