@@ -18,6 +18,10 @@ private:
 
 public:
 
+    ServoCommand(int32_t id, float angle):
+        msg_prefix{'S', 'E', 'R', 'V', 'O'}, id{id}, angle{angle}
+    {}
+
     static expected<ServoCommand, Error> from_zmq_message(const zmq::message_t &message)
     {
         if (message.size() != sizeof(ServoCommand)) {
@@ -37,13 +41,16 @@ public:
         return "SERVO";
     }
 
-    ServoCommand(int32_t id, float angle):
-        id(id), angle(angle)
-    {}
-
     string to_string() const
     {
         return "SERVO(id=" + std::to_string(id) + ", angle=" + std::to_string(angle) + ")";
+    }
+
+    zmq::message_t to_zmq_message() const
+    {
+        zmq::message_t message{sizeof(ServoCommand)};
+        *(ServoCommand *)message.data() = *this;
+        return message;
     }
 
     char msg_prefix[PREFIX_LENGTH];
