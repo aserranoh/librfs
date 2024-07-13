@@ -43,7 +43,7 @@ public:
 
     string to_string() const
     {
-        return "SERVO(id=" + std::to_string(id) + ", angle=" + std::to_string(angle) + ")";
+        return prefix() + "(id=" + std::to_string(id) + ", angle=" + std::to_string(angle) + ")";
     }
 
     zmq::message_t to_zmq_message() const

@@ -3,8 +3,8 @@
 
 #include <algorithm>
 #include <array>
+#include <climits>
 #include <string>
-#include <nlohmann/json.hpp>
 
 using namespace std;
 
@@ -31,23 +31,29 @@ bool read_env_bool(const string &env, bool default_value = false)
     }
 }
 
-uint8_t read_env_u8(const string &env, uint8_t default_value = 0, uint8_t min_value = 0, uint8_t max_value = 255)
+long read_env_long(const string &env, long default_value = 0, long min_value = LONG_MIN, long max_value = LONG_MAX)
 {
     const char *env_value = getenv(env.c_str());
 
     if (!env_value)
         return default_value;
 
-    unsigned long ulong_value = default_value;
+    long value = default_value;
     try {
-        ulong_value = stoul(env_value, nullptr, 0);
+        value = stol(env_value, nullptr, 0);
 
-        if (ulong_value < min_value || ulong_value > max_value) {
-            ulong_value = default_value;
+        if (value < min_value || value > max_value) {
+            value = default_value;
         }
     } catch (const exception &e) {}
 
-    return ulong_value;
+    return value;
+}
+
+long read_env_long_indexed(const string &env, uint32_t index, long default_value = 0, long min_value = LONG_MIN, long max_value = LONG_MAX)
+{
+    const string env_indexed = string(env) + "_" + to_string(index);
+    return read_env_long(env_indexed);
 }
 
 float read_env_float(const string &env, float default_value = 0.0)
@@ -60,13 +66,3 @@ float read_env_float(const string &env, float default_value = 0.0)
     }
 }
 
-nlohmann::json read_env_json(const string &env, const nlohmann::json &default_value = {})
-{
-    const char *env_value = getenv(env.c_str());
-
-    try {
-        return nlohmann::json::parse(env_value);
-    } catch (const nlohmann::json::parse_error &error) {
-        return default_value;
-    }
-}
