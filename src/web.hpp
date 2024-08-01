@@ -7,7 +7,6 @@ extern "C"
 }
 
 #include <expected>
-#include <format>
 #include <iostream>
 #include <list>
 #include <memory>
@@ -83,7 +82,7 @@ public:
     virtual ~HTTPEventHandler()
     {}
 
-    virtual void get(HTTPRequest &request) const
+    virtual void get(HTTPRequest &request)
     {
         mg_http_reply(request.connection, HTTP_ERROR_405_METHOD_NOT_ALLOWED, "", "405: Method Not Allowed");
     }
@@ -93,7 +92,7 @@ public:
         reply(request, HTTP_200_OK, "");
     }
 
-    virtual void post(HTTPRequest &request) const
+    virtual void post(HTTPRequest &request)
     {
         mg_http_reply(request.connection, HTTP_ERROR_405_METHOD_NOT_ALLOWED, "", "405: Method Not Allowed");
     }
@@ -116,7 +115,7 @@ public:
     virtual ~HTTPFileHandler()
     {}
 
-    inline virtual void get(HTTPRequest &request) const override
+    inline virtual void get(HTTPRequest &request) override
     {
         mg_http_serve_file(request.connection, request.http_message, path.c_str(), &serve_file_opts);
     }
